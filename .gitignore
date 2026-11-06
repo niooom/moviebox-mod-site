@@ -2,3 +2,9 @@ node_modules/
 dist/
 *.local
 .DS_Store
+
+# InsForge writes project id + API key here — must never be committed
+.insforge/
+.env
+.env.*
+!.env.example

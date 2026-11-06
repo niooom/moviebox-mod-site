@@ -1,0 +1,98 @@
+name: InsForge backend tasks
+
+# Headless InsForge CLI work. The user API key lives only in Actions secrets —
+# never in this file, never in front-end code, never in a VITE_/PUBLIC_ variable.
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Which InsForge task to run"
+        required: true
+        default: whoami
+        type: choice
+        options:
+          - whoami
+          - metadata
+          - tables
+          - storage-buckets
+          - functions-list
+          - link-only
+      query:
+        description: "SQL for the 'query' step (optional, used by --task query)"
+        required: false
+        type: string
+      project_id:
+        description: "InsForge project id"
+        required: true
+        default: "53e5e281-bdcd-405c-9c67-1eed88053068"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  insforge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fail early when the secret is missing
+        env:
+          TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${TOKEN:-}" ]]; then
+            echo "::error::Add the repository secret INSFORGE_ACCESS_TOKEN (InsForge uak_... key) under Settings -> Secrets and variables -> Actions"
+            exit 1
+          fi
+
+      - name: Link the project directory
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx --yes @insforge/cli@latest link --project-id "${{ inputs.project_id }}" --json || true
+          npx --yes @insforge/cli@latest whoami --json
+
+      - name: whoami
+        if: ${{ inputs.task == 'whoami' }}
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: npx --yes @insforge/cli@latest whoami --json
+
+      - name: metadata
+        if: ${{ inputs.task == 'metadata' }}
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: npx --yes @insforge/cli@latest metadata --json
+
+      - name: tables
+        if: ${{ inputs.task == 'tables' }}
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: npx --yes @insforge/cli@latest db tables --json
+
+      - name: storage buckets
+        if: ${{ inputs.task == 'storage-buckets' }}
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: npx -y @insforge/cli@latest storage buckets --json
+
+      - name: edge functions
+        if: ${{ inputs.task == 'functions-list' }}
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: npx --yes @insforge/cli@latest functions list --json
+
+      - name: custom query
+        if: ${{ inputs.query != '' }}
+        env:
+          INSFORGE_ACCESS_TOKEN: ${{ secrets.INSFORGE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx --yes @insforge/cli@latest db query "${{ inputs.query }}" --json
