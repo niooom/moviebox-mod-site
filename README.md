@@ -22,7 +22,12 @@ npm run build    # dist/ তৈরি করে
 
 ## ডিপ্লয়
 
-`main`-এ পুশ করলেই `.github/workflows/deploy.yml` বিল্ড করে Pages-এ দেয়। Pages চালু না থাকলে একবার **Settings → Pages → Source: GitHub Actions** সেট করুন (public রিপোতে এটি ফ্রি)।
+`main`-এ পুশ করলেই `.github/workflows/deploy.yml` বিল্ড করে `gh-pages` ব্রাঞ্চে পাবলিশ করে — কোনো ম্যানুয়াল সেটআপ ছাড়াই। লাইভ লিংক:
+
+- `https://cdn.jsdelivr.net/gh/niooom/moviebox-mod-site@gh-pages/index.html`
+- `https://raw.githack.com/niooom/moviebox-mod-site/gh-pages/index.html`
+
+চাইলে চিরাচরিত github.io লিংকও পাওয়া যায়: **Settings → Pages → Source: Deploy from a branch → `gh-pages` / root** — ব্যস, তারপর `https://niooom.github.io/moviebox-mod-site/` কাজ করবে।
 
 ## দাবিত্যাগ
 
