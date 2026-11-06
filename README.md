@@ -1,2 +1,29 @@
-# moviebox-mod-site
-Landing page (React + Vite) for the Nooxe MovieBox mod build — deploy to GitHub Pages
+# MovieBox Mod — ডাউনলোড ল্যান্ডিং পেজ
+
+MovieBox v4.0.03.1028.03-এর ব্যক্তিগত মড বিল্ডের জন্য ডাউনলোড পেজ। React + Vite + TypeScript + Tailwind দিয়ে বানানো, GitHub Pages-এ অটো ডিপ্লয় হয়।
+
+পেজে যা আছে: হিরো + ডাউনলোড বাটন, ফিচার কার্ড, ইনস্টল গাইড (৪ ধাপ), সাধারণ প্রশ্ন, দাবিত্যাগ ও সোর্স লিংক।
+
+## ডাউনলোড লিংক যুক্ত করা
+
+1. বিল্ড থেকে `MovieBox_v4.0.03.1028.03_updated-adfree.apk` ফাইলটি নামান।
+2. এই রিপোর **Releases → Draft a new release**-এ সেটি attach করে publish করুন।
+3. asset-এর সরাসরি লিংক `src/config.ts`-এর `downloadUrl`-এ বসিয়ে `placeholderDownload: false` করুন।
+
+> এই পেজ নিজে কোনো APK হোস্ট করে না; লিংক শুধু নির্দেশ করে।
+
+## স্থানীয়ভাবে চালানো
+
+```bash
+npm install
+npm run dev      # ডেভ সার্ভার
+npm run build    # dist/ তৈরি করে
+```
+
+## ডিপ্লয়
+
+`main`-এ পুশ করলেই `.github/workflows/deploy.yml` বিল্ড করে Pages-এ দেয়। Pages চালু না থাকলে একবার **Settings → Pages → Source: GitHub Actions** সেট করুন (public রিপোতে এটি ফ্রি)।
+
+## দাবিত্যাগ
+
+অফিসিয়াল অ্যাপ নয়; MovieBox-এর বিকাশকারীর সাথে কোনো সম্পর্ক নেই। বিল্ডটি ব্যক্তিগত ব্যবহারের জন্য, এবং এই প্রকল্প কোনো সাবস্ক্রিপশন/পেইড কনটেন্ট আনলক করে না।

@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #07070c;
+  color: #e8e8f0;
+  font-family: ui-sans-serif, system-ui, 'Segoe UI', 'Noto Sans Bengali', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
