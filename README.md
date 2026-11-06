@@ -12,6 +12,15 @@ MovieBox v4.0.03.1028.03-এর ব্যক্তিগত মড বিল্�
 
 > এই পেজ নিজে কোনো APK হোস্ট করে না; লিংক শুধু নির্দেশ করে।
 
+## InsForge ব্যাকএন্ড
+
+ব্যাকএন্ড কাজ চলে `@insforge/cli` দিয়ে (কখনোই গ্লোবালি ইনস্টল নয়, সবসময় `npx -y @insforge/cli ...`)।
+
+- ওয়ার্কফ্লো: `.github/workflows/insforge.yml` (manual) — `whoami`, `metadata`, `tables`, `storage buckets`, `functions list`, বা কাস্টম SQL
+- সিক্রেট: **`INSFORGE_ACCESS_TOKEN`** (repo → Settings → Secrets and variables → Actions) — `uak_...` কী কখনো ফাইলে বা ফ্রন্টএন্ড কোডে বসবে না
+- ডকুমেন্টেশন: [`docs/insforge.md`](docs/insforge.md) · ভেন্ডর করা স্কিল: [`.agents/skills/insforge-cli/SKILL.md`](.agents/skills/insforge-cli/SKILL.md)
+- `.insforge/` (লিংক করা প্রজেক্টের API key থাকে) `.gitignore`-এ বাদ দেওয়া — কখনো কমিট করবেন না
+
 ## স্থানীয়ভাবে চালানো
 
 ```bash
